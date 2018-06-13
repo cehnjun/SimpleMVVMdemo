@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 using SimpleMVVMdemo.Commands;
 
 namespace SimpleMVVMdemo.ViewModels
@@ -45,16 +46,27 @@ namespace SimpleMVVMdemo.ViewModels
         }
 
         public DelegateCommand AddCommand { get; set; }
+        public DelegateCommand SaveCommand { get; set; }
 
         private void Add(object parameter)
         {
             this.Result = this.Input1 + this.input2;
         }
 
+        private void Save(object parameter)
+        {
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.ShowDialog();
+        }
+
+
         public MainWindowViewModel()
         {
             this.AddCommand = new DelegateCommand();
             this.AddCommand.ExecuteAction = new Action<object>(this.Add);
+
+            this.SaveCommand = new DelegateCommand();
+            this.SaveCommand.ExecuteAction = new Action<object>(this.Save);
         }
     }
 }
